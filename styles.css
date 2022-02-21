@@ -1,0 +1,51 @@
+body {
+    background-color: #222222;
+    color: #FFFFFF;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #555555;
+    border-radius: 6px;
+    margin-left: calc(50% - 150px);
+    margin-top: 100px;
+}
+
+.container div {
+    width: 248px;
+    margin-left: calc(50% - 124px);
+    border-bottom: 1px solid #555555;
+    margin-top: 50px;
+    line-height: 35px;
+}
+
+.container div p {
+    height: 15px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.container table {
+    width: 90%;
+    margin-left: 5%;
+    border-spacing: 10px;
+}
+
+.container table tr td {
+    height: 30px;
+    width: 50px;
+    background-color: #333333;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.signs {
+    background-color: #555555 !important;
+}
+
+#equal {
+    background-image: linear-gradient(#EB008C, #7F2A90);
+}
