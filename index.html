@@ -11,36 +11,105 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div>
-            <p class="result">15</p>
-        </div>
-        <table>
-            <tr>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td class="signs">÷</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td class="signs">×</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td class="signs">-</td>
-            </tr>
-            <tr>
-                <td>0</td>
-                <td>.</td>
-                <td id="equal">=</td>
-                <td class="signs">+</td>
-            </tr>
-        </table>
-    </div>
+    <div id="app"></div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        Vue.createApp({
+            template: `
+                <div class="container">
+                <div>
+                    <p class="result"> {{ insert }}</p>
+                </div>
+                <table>
+                    <tr>
+                        <td @click.prevent="addElement(7)">7</td>
+                        <td @click.prevent="addElement(8)">8</td>
+                        <td @click.prevent="addElement(9)">9</td>
+                        <td class="signs" @click.prevent="addElement('/')">/</td>
+                    </tr>
+                    <tr>
+                        <td @click.prevent="addElement(4)">4</td>
+                        <td @click.prevent="addElement(5)">5</td>
+                        <td @click.prevent="addElement(6)">6</td>
+                        <td class="signs" @click.prevent="addElement('*')">*</td>
+                    </tr>
+                    <tr>
+                        <td @click.prevent="addElement(1)">1</td>
+                        <td @click.prevent="addElement(2)">2</td>
+                        <td @click.prevent="addElement(3)">3</td>
+                        <td class="signs" @click.prevent="addElement('-')">-</td>
+                    </tr>
+                    <tr>
+                        <td @click.prevent="addElement(0)">0</td>
+                        <td @click.prevent="addElement('.')">.</td>
+                        <td id="equal" @click.prevent="getResult()">=</td>
+                        <td class="signs" @click.prevent="addElement('+')">+</td>
+                    </tr>
+                </table>
+                </div>
+            `,
+            data() {
+                return {
+                    insert: '',
+                    element: '',
+                    result: null,
+                    aux: false,
+                    calcs: [
+                        {
+                            first_n: null,
+                            second_n: null
+                        }
+
+                    ],
+                    operation: '',
+                    after_result: false
+                }
+            },
+            methods: {
+                addElement(element){
+                    if (!isNaN(element) && this.aux) (
+                        this.insert = element,
+                        this.aux = false
+                    )
+                    else if (!isNaN(element) && this.after_result) (
+                        this.insert = element,
+                        this.aux = false,
+                        this.after_result = false
+                    ) 
+                    else if (!isNaN(element)) (
+                        this.insert += String(element)
+                    ) 
+                    else (
+                        this.first_n = this.insert,
+                        this.insert = element,
+                        this.operation = element,
+                        this.aux = true
+                    )
+                },
+                getResult() {
+                    if (this.operation == '+') (
+                        this.second_n = this.insert,
+                        this.insert = Number(this.first_n) + Number(this.second_n),
+                        this.after_result = true
+                    )
+                    else if (this.operation == '-') (
+                        this.second_n = this.insert,
+                        this.insert = Number(this.first_n) - Number(this.second_n),
+                        this.after_result = true
+                    )
+                    else if (this.operation == '*') (
+                        this.second_n = this.insert,
+                        this.insert = Number(this.first_n) * Number(this.second_n),
+                        this.after_result = true
+                    )
+                    else (
+                        this.second_n = this.insert,
+                        this.insert = Number(this.first_n) / Number(this.second_n),
+                        this.after_result = true
+                    ) 
+                }
+            }
+        }).mount('#app')
+    </script>
 </body>
 </html>
